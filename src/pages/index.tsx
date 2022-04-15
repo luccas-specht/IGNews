@@ -14,6 +14,8 @@ interface HomeProps {
 }
 
 export default function Home({ product }: HomeProps) {
+  const { priceId, amount } = product;
+
   return (
     <>
       <Head>
@@ -28,9 +30,9 @@ export default function Home({ product }: HomeProps) {
           </h1>
           <p>
             Get access to all publications <br />
-            <span>for {product.amount} month</span>
+            <span>for {amount} month</span>
           </p>
-          <SubscribeButton />
+          <SubscribeButton priceId={priceId} />
         </section>
         <img src="/images/avatar.svg" alt="Girl coding" />
       </main>
@@ -41,9 +43,13 @@ export default function Home({ product }: HomeProps) {
 export const getServerSideProps: GetServerSideProps = async () => {
   const PRICE_ID = 'price_1KnWptGkw9LK4xGQkuf4lD5c';
 
+  const { id, unit_amount } = await stripe.prices.retrieve(PRICE_ID);
+
+  /*  
+  -- if you want to get the full product object, you can use the following:
   const { id, unit_amount } = await stripe.prices.retrieve(PRICE_ID, {
     expand: ['product'],
-  });
+  }); */
 
   const product = {
     priceId: id,
