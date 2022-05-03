@@ -8,7 +8,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
         -- users
           -- [id].ts
 
-the query contents one param: the id 
+the query contains one param: the id 
 
 const id = request.query.id;
 */
